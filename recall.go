@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -36,5 +37,28 @@ func readFromFile(year string, month string, day string) {
 	}
 
 	expenses := strings.Split(string(data), "\n")
-	fmt.Println(expenses)
+	var total float64
+
+	fmt.Printf("\n\n\n")
+	for _, expense := range expenses {
+		if expense == "" {
+			continue
+		}
+		
+		parts := strings.Split(expense, ",")
+		name := parts[0]
+		cost := parts[1]
+		fmt.Printf("Purchased %s for %s\n", name, cost)
+		
+		costParsed, err := strconv.ParseFloat(cost, 64)
+		if err != nil {
+			fmt.Println("Error parsing cost |", err)
+			return
+		}
+
+		total = total + costParsed
+	}
+	fmt.Printf("\n\n\n")
+	
+	fmt.Println("Total for the day:", total)
 }
