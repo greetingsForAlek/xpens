@@ -18,6 +18,7 @@ func logPrompt() {
 	fmt.Println("Item Cost: ")
 	cost, _ := reader.ReadString('\n')
 
+	name = strings.TrimSpace(name)
 	cost = strings.TrimSpace(cost)
 
 	costFloat, err := strconv.ParseFloat(cost, 64)
@@ -34,6 +35,7 @@ func logExpense(name string, cost float64) {
 
 	year := now.Format("2006")
 	month := now.Format("Jan")
+	day := now.Format("2")
 
 	path := fmt.Sprintf("logs/%s/%s", year, month)
 
@@ -41,5 +43,22 @@ func logExpense(name string, cost float64) {
 	if err != nil {
 		fmt.Println("Error creating folders:", err)
 		return
+	}
+
+	filePath := fmt.Sprintf("%s/%s.txt", path, day)
+
+	data := fmt.Sprintf("%s,%.2f\n", name, cost)
+
+	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		fmt.Println("Error opening file:", err);
+	}
+
+	defer file.Close()
+	
+	_, err = file.WriteString(data)
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
 	}
 }
