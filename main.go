@@ -21,7 +21,7 @@ func main() {
 
 	switch command {
 	case "log":
-		fmt.Println("Log expense")
+		logPrompt()
 	case "recall":
 		fmt.Println("Recall expenses")
 	case "crunch":
