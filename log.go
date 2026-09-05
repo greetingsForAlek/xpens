@@ -53,6 +53,7 @@ func logExpense(name string, cost float64) {
 
 	if err != nil {
 		fmt.Println("Error opening file:", err);
+		return
 	}
 
 	defer file.Close()
@@ -60,5 +61,6 @@ func logExpense(name string, cost float64) {
 	_, err = file.WriteString(data)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
+		return
 	}
 }

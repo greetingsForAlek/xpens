@@ -23,7 +23,7 @@ func main() {
 	case "log":
 		logPrompt()
 	case "recall":
-		fmt.Println("Recall expenses")
+		recallPrompt()
 	case "crunch":
 		fmt.Println("Crunch expenses statistics")
 	case "help":
