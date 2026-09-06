@@ -25,7 +25,7 @@ func main() {
 	case "recall":
 		recallPrompt()
 	case "crunch":
-		fmt.Println("Crunch expenses statistics")
+		crunchPrompt()
 	case "help":
 		fmt.Println("Help command")
 	default:
