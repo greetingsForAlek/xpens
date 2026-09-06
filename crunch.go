@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filePath"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -37,5 +39,56 @@ func currentMonth() {
 	month := now.Format("Jan")
 
 	path := fmt.Sprintf("logs/%s/%s", year, month)
-	fmt.Println(path)
+
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		fmt.Println("Error reading directory |", err)
+		return
+	}
+
+	var total float64
+
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+
+		filePath := filepath.Join(path, entry.Name())
+
+		data, err := os.ReadFile(filePath)
+		if err != nil {
+			fmt.Println("Error reading", entry.Name(), ":", err)
+			continue
+		}
+
+		fmt.Println("\n---", entry.Name(), "---")
+		total += splitAndPrint(string(data))
+	}
+
+	fmt.Printf("\nTotal for the month: €%.2f\n", total)
+}
+
+func splitAndPrint(data string) float64 {
+	lines := strings.Split(strings.TrimSpace(data), "\n")
+
+	var monthlyTotal float64
+
+	for _, line := range lines {
+		parts := strings.Split(line, ",")
+
+		name := parts[0]
+		costString := parts[1]
+
+		cost, err := strconv.ParseFloat(costString, 64)
+		if err != nil {
+			fmt.Println("Error parsing cost: ", err)
+			continue
+		}
+
+		fmt.Printf("%s: €%.2f\n", name, cost)
+
+		monthlyTotal += cost
+	}
+
+	return monthlyTotal
 }
