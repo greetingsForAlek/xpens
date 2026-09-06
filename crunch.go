@@ -26,7 +26,7 @@ func crunchPrompt() {
 	case "A":
 		currentMonth()
 	case "B":
-		fmt.Println("Specific Month")
+		specificMonth()
 	default:
 		fmt.Println("Invalid Option.")
 	}
@@ -59,6 +59,49 @@ func currentMonth() {
 		if err != nil {
 			fmt.Println("Error reading", entry.Name(), ":", err)
 			continue
+		}
+
+		fmt.Println("\n---", entry.Name(), "---")
+		total += splitAndPrint(string(data))
+	}
+
+	fmt.Printf("\nTotal for the month: €%.2f\n", total)
+}
+
+func specificMonth() {
+	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Printf("You have selected to choose a specific month. Please enter the following:\n\n\n")
+
+	fmt.Println("Year: ")
+	year, _ := reader.ReadString('\n')
+
+	fmt.Println("Month: ")
+	month, _ := reader.ReadString('\n')
+
+	year = strings.TrimSpace(year)
+	month = strings.TrimSpace(month)
+
+	path := fmt.Sprintf("logs/%s/%s", year, month)
+
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		fmt.Printf("Error reading from %s | %s\n", path, err)
+		return
+	}
+
+	var total float64
+
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+
+		filePath := filepath.Join(path, entry.Name())
+
+		data, err := os.ReadFile(filePath)
+		if err != nil {
+			fmt.Printf("Error reading from file at path %s | %s", filePath, err)
 		}
 
 		fmt.Println("\n---", entry.Name(), "---")
