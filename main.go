@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 
 	fmt.Println(args)
 	command := args[0]
+	command = strings.ToLower(command)
 
 	switch command {
 	case "log":
@@ -27,8 +29,9 @@ func main() {
 	case "crunch":
 		crunchPrompt()
 	case "help":
-		fmt.Println("Help command")
+		helpPrompt()
 	default:
-		fmt.Println("Unknown command: ", command, "| To see all commands, run 'xpens help'")
+		// fmt.Println("Unknown command: ", command, "| To see all commands, run 'xpens help'")
+		checkCommand(command)
 	}
 }
