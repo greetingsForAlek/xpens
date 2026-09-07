@@ -14,7 +14,6 @@ func helpPrompt() {
 
 func checkCommand(command string) {
 	letters := strings.Split(command, "")
-	fmt.Println(letters)
 
 	if len(letters) == 3 {
 		if letters[0] == "l" || letters[1] == "o" || letters[2] == "g" {
