@@ -11,6 +11,31 @@ import (
 func recallPrompt() {
 	reader := bufio.NewReader(os.Stdin)
 
+	fmt.Println("What would you like to recall?")
+
+	fmt.Println("A - Today's Purchases")
+	fmt.Println("B - Purchases from a specific date")
+	option, _ := reader.ReadString('\n')
+
+	option = strings.TrimSpace(strings.ToLower(option))
+
+	switch option {
+	case "a" :
+		recallForToday()
+	case "b":
+		recallForSpecificDate()
+	default:
+		fmt.Printf("Invalid choice '%s'\n", option)
+	}
+}
+
+func recallForToday() {
+	fmt.Println("Not implemented")
+}
+
+func recallForSpecificDate() {
+	reader := bufio.NewReader(os.Stdin)
+
 	fmt.Println("Year (e.g. 2026): ")
 	recallYear, _ := reader.ReadString('\n')
 
@@ -59,6 +84,6 @@ func readFromFile(year string, month string, day string) {
 		total = total + costParsed
 	}
 	fmt.Printf("\n\n\n")
-	
+
 	fmt.Println("Total for the day:", total)
 }
