@@ -31,6 +31,7 @@ func main() {
 	case "help":
 		helpPrompt()
 	default:
-		fmt.Println("Unknown command: ", command, "| To see all commands, run 'xpens help'")
+		// fmt.Println("Unknown command: ", command, "| To see all commands, run 'xpens help'")
+		checkCommand(command)
 	}
 }
