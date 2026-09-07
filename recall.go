@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func recallPrompt() {
@@ -30,7 +31,13 @@ func recallPrompt() {
 }
 
 func recallForToday() {
-	fmt.Println("Not implemented")
+	now := time.Now()
+
+	year := now.Format("2006")
+	month := now.Format("Jan")
+	day := now.Format("2")
+
+	readFromFile(year, month, day)
 }
 
 func recallForSpecificDate() {
